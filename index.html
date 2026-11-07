@@ -1,1 +1,46 @@
+<div class="heading" id="formHeading">
+  🔐 SIGN IN
+</div>
 
+<form id="authForm">
+
+  <div class="field">
+    <label>USERNAME</label>
+    <input id="username" type="text"
+      placeholder="Your username" required>
+  </div>
+
+  <div class="field hidden" id="emailField">
+    <label>EMAIL ADDRESS</label>
+    <input id="email" type="email"
+      placeholder="Your email">
+  </div>
+
+  <div class="field">
+    <label>PASSWORD</label>
+    <div class="password-box">
+      <input id="password" type="password"
+        placeholder="Your password" required>
+      <span class="eye" onclick="togglePassword()">👁</span>
+    </div>
+  </div>
+
+  <div class="field hidden" id="confirmField">
+    <label>CONFIRM PASSWORD</label>
+    <input id="confirmPassword" type="password"
+      placeholder="Confirm your password">
+  </div>
+
+  <button class="login-btn" type="submit"
+    id="submitBtn">
+    🔐 Log In →
+  </button>
+
+  <p class="message" id="message"></p>
+
+</form>
+
+<div class="switch" id="switchText">
+  New here?
+  <span onclick="toggleForm()">Create an account</span>
+</div>
