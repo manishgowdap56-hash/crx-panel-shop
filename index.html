@@ -116,6 +116,30 @@ const SUPABASE_KEY = "sb_publishable_KK68ZfbIzPcmlihWkZe4Jg_MI9fVfoi";
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+function toggleForm() {
+  register = !register;
 
+  document.getElementById("heading").textContent =
+    register ? "📝 CREATE ACCOUNT" : "🔐 SIGN IN";
+
+  document.getElementById("emailField").classList.toggle("hidden", !register);
+  document.getElementById("confirmField").classList.toggle("hidden", !register);
+
+  document.getElementById("email").required = register;
+  document.getElementById("confirm").required = register;
+
+  document.getElementById("submitBtn").textContent =
+    register ? "CREATE ACCOUNT →" : "🔐 LOG IN →";
+
+  document.getElementById("switch").innerHTML = register
+    ? 'Already registered? <span onclick="toggleForm()">Sign in</span>'
+    : 'New here? <span id="registerLink">Create an account</span>';
+
+  document.getElementById("message").textContent = "";
+}
+
+document.getElementById("switch").addEventListener("click", function(e) {
+  if (e.target.id === "registerLink") toggleForm();
+});
 </body>
 </html>
