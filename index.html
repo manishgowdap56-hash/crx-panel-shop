@@ -217,15 +217,7 @@ function toggleForm(){
  'New here? <span onclick="toggleForm()">Create an account</span>';
  document.getElementById("message").textContent="";
 }
-document.getElementById("authForm").addEventListener("submit",function(e){
- e.preventDefault();
- const msg=document.getElementById("message");
- if(register && document.getElementById("password").value!==document.getElementById("confirm").value){
-  msg.textContent="Passwords do not match!";
-  return;
- }
- msg.textContent="Interface ready. Secure authentication needs to be connected.";
-});
+
 </script>
 </body>
 </html>
