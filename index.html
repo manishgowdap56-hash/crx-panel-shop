@@ -109,7 +109,92 @@ button:hover{filter:brightness(1.1)}
  </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL = "https://plymddvkktydvizseysc.supabase.co";
+const SUPABASE_KEY = "sb_publishable_KK68ZfbIzPcmlihWkZe4Jg_MI9fVfoi";
+
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let register = false;
+
+function togglePassword() {
+  const p = document.getElementById("password");
+  p.type = p.type === "password" ? "text" : "password";
+}
+
+function toggleForm() {
+  register = !register;
+
+  document.getElementById("heading").textContent =
+    register ? "📝 CREATE ACCOUNT" : "🔐 SIGN IN";
+
+  document.getElementById("emailField").classList.toggle("hidden", !register);
+  document.getElementById("confirmField").classList.toggle("hidden", !register);
+
+  document.getElementById("email").required = register;
+  document.getElementById("confirm").required = register;
+
+  document.querySelector(".field label").textContent =
+    register ? "USERNAME" : "EMAIL ADDRESS";
+
+  document.getElementById("username").placeholder =
+    register ? "Enter username" : "Enter email address";
+
+  document.getElementById("submitBtn").textContent =
+    register ? "CREATE ACCOUNT →" : "🔐 LOG IN →";
+
+  document.getElementById("switch").innerHTML = register
+    ? 'Already registered? <span onclick="toggleForm()">Sign in</span>'
+    : 'New here? <span onclick="toggleForm()">Create an account</span>';
+
+  document.getElementById("message").textContent = "";
+}
+
+document.getElementById("authForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const msg = document.getElementById("message");
+  const password = document.getElementById("password").value;
+
+  msg.textContent = "Please wait...";
+
+  try {
+    let result;
+
+    if (register) {
+      if (password !== document.getElementById("confirm").value) {
+        msg.textContent = "Passwords do not match!";
+        return;
+      }
+
+      result = await db.auth.signUp({
+        email: document.getElementById("email").value,
+        password: password,
+        options: {
+          data: {
+            username: document.getElementById("username").value
+          }
+        }
+      });
+    } else {
+      result = await db.auth.signInWithPassword({
+        email: document.getElementById("username").value,
+        password: password
+      });
+    }
+
+    if (result.error) throw result.error;
+
+    msg.textContent = register
+      ? "Account created! Check your email if verification is required."
+      : "Login successful! Welcome to CRX PANEL SHOP.";
+
+  } catch (error) {
+    msg.textContent = error.message;
+  }
+});
+</script>
 let register=false;
 
 function togglePassword(){
